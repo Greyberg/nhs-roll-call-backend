@@ -2,13 +2,13 @@ package models
 
 import play.api.libs.json.{Json, OFormat}
 
+//TODO - note changes in api doc
 case class Availability(name: String,
                         resource: Resource,
                         location: Option[String],
                         workLocation: String,
                         reachableLocations: List[String],
-                        timesAvailable: Option[List[Time]],
-                        timesUnavailable: Option[List[TimeUnavailable]],
+                        timesUnavailable: List[TimeUnavailable],
                         defaultAsAvailable: Boolean)
 
 object Availability {
