@@ -46,7 +46,7 @@ trait Tables {
     val userId: Rep[Long] = column[Long]("user_id")
     val startDate: Rep[Int] = column[Int]("start_date")
     val startMonth: Rep[Int] = column[Int]("start_month")
-    val startYear: Rep[Int] = column[Int]("startYear")
+    val startYear: Rep[Int] = column[Int]("start_year")
     val reason: Rep[String] = column[String]("reason")
     val durationHours: Rep[String] = column[String]("duration_hours")
 
