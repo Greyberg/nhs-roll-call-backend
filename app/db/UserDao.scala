@@ -19,8 +19,7 @@ class UserDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider
       0L,
       availability.resource.resourceType,
       availability.resource.verified,
-      availability.workLocation,
-      availability.defaultAsAvailable)
+      availability.workLocation)
 
 
     val action = (UserTable returning UserTable.map(_.userId)) += row

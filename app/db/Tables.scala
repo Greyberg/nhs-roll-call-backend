@@ -14,8 +14,7 @@ trait Tables {
   case class UserRow(userId: Long,
                      resourceType: String,
                      resourceVerified: Boolean,
-                     workLocation: String,
-                     defaultAsAvailable: Boolean)
+                     workLocation: String)
 
   class UserTable(_tableTag: Tag) extends Table[UserRow](_tableTag, "users") {
 
@@ -23,10 +22,9 @@ trait Tables {
     val resourceType: Rep[String] = column[String]("resource_type")
     val resourceVerified: Rep[Boolean] = column[Boolean]("resource_verified")
     val workLocation: Rep[String] = column[String]("work_location")
-    val defaultAsAvailable: Rep[Boolean] = column[Boolean]("default_as_available")
 
     def * : ProvenShape[UserRow] =
-      (userId, resourceType, resourceVerified, workLocation, defaultAsAvailable) <> (UserRow.tupled, UserRow.unapply)
+      (userId, resourceType, resourceVerified, workLocation) <> (UserRow.tupled, UserRow.unapply)
 
   }
 
