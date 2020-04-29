@@ -4,5 +4,9 @@ POST    /availability                       controllers.AvailabilityController.a
 
 GET     /availability/location/:location    controllers.AvailabilityController.fetchAvailability(location: String)
 
+#Api documentation
+GET     /swagger.json                       controllers.ApiHelpController.getResources
+GET     /availability/swagger.json          controllers.ApiHelpController.getResource(path = "/availability")
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                       controllers.Assets.versioned(path="/public", file: Asset)

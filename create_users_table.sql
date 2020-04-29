@@ -17,6 +17,5 @@ CREATE TABLE users (
 	user_id BIGINT NOT NULL DEFAULT next_user_id() PRIMARY KEY,
 	resource_type VARCHAR(20) NOT NULL,
 	resource_verified BOOLEAN NOT NULL,
-	work_location VARCHAR(10) NOT NULL,
-	default_as_available BOOLEAN NOT NULL
+	work_location VARCHAR(10) NOT NULL
 );
