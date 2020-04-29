@@ -35,7 +35,7 @@ object Resource {
 }
 
 
-case class Time(date: Int, month: Int, year: Int, start: String, duration: String)
+case class Time(date: Int, month: Int, year: Int, duration: Int)
 
 object Time {
   implicit val formatAvailability: OFormat[Time] = Json.format[Time]

@@ -1,13 +1,12 @@
 package controllers
 
-import io.swagger.annotations.{Api, ApiOperation, ApiParam, ApiResponse, ApiResponses}
+import io.swagger.annotations._
 import javax.inject._
 import models._
-import play.api.mvc._
 import play.api.libs.json.Json
+import play.api.mvc._
 import services.AvailabilityService
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -18,10 +17,12 @@ class AvailabilityController @Inject()(
                                       implicit ec: ExecutionContext
 ) extends BaseController {
 
+  //TODO - document this endpoint
   def addAvailability(): Action[Availability] = Action(parse.json[Availability]).async { implicit request =>
     availabilityService.saveUserWithUnavailability(request.body).map( _ => Ok)
   }
 
+  //TODO - return 400 with message in case of invalid location supplied
   @ApiOperation(
     nickname = "fetchAvailability",
     value = "Fetch unavailabilities of given location",
@@ -31,18 +32,11 @@ class AvailabilityController @Inject()(
   @ApiResponses(Array(
     new ApiResponse(code = 400, message = "Invalid location supplied")
   ))
-  def fetchAvailability(@ApiParam(value = "Location of unavailabilities") location: String): Action[AnyContent] = Action.async {
-      Future.successful(Ok(Json.toJson(fakeAvailability)))
+  def fetchAvailability(@ApiParam(value = "Location of unavailabilities") location: String): Action[AnyContent] = {
+    Action.async {
+      availabilityService.fetchUnavailabilities(location).map { result =>
+        Ok(Json.toJson(result))
+      }
+    }
   }
-
-  val fakeAvailability: List[Availability] = List(
-    Availability(
-      "Jane Doe",
-      Resource("SHO", true),
-      None,
-      "S102JF",
-      List("S102JF"),
-      List(TimeUnavailable(Time(14, 4, 2020, "08:00", "336:00"), "diagnosed"))
-    )
-  )
 }

@@ -34,4 +34,10 @@ class AvailabilityDao @Inject()(protected val dbConfigProvider: DatabaseConfigPr
     Future.sequence(seq)
   }
 
+  def fetchUnavailabilities(userId: Long): Future[Seq[UnavailabilityRow]] = {
+    val query = UnavailabilityTable.filter(_.userId === userId)
+
+    db.run(query.result)
+  }
+
 }
