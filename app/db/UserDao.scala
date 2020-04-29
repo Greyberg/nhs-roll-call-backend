@@ -17,6 +17,7 @@ class UserDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider
 
     val row = UserRow(
       0L,
+      availability.name,
       availability.resource.resourceType,
       availability.resource.verified,
       availability.workLocation)
@@ -25,6 +26,12 @@ class UserDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider
     val action = (UserTable returning UserTable.map(_.userId)) += row
 
     db.run(action)
+  }
+
+  def fetchUsers(workLocation: String): Future[Seq[UserRow]] = {
+    val query = UserTable.filter(_.workLocation === workLocation)
+
+    db.run(query.result)
   }
 
 }

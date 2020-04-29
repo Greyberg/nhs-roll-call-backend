@@ -12,6 +12,7 @@ trait Tables {
   import profile.api._
 
   case class UserRow(userId: Long,
+                     userName: String,
                      resourceType: String,
                      resourceVerified: Boolean,
                      workLocation: String)
@@ -19,12 +20,13 @@ trait Tables {
   class UserTable(_tableTag: Tag) extends Table[UserRow](_tableTag, "users") {
 
     val userId: Rep[Long] = column[Long]("user_id", O.AutoInc, O.PrimaryKey)
+    val userName: Rep[String] = column[String]("user_name")
     val resourceType: Rep[String] = column[String]("resource_type")
     val resourceVerified: Rep[Boolean] = column[Boolean]("resource_verified")
     val workLocation: Rep[String] = column[String]("work_location")
 
     def * : ProvenShape[UserRow] =
-      (userId, resourceType, resourceVerified, workLocation) <> (UserRow.tupled, UserRow.unapply)
+      (userId, userName, resourceType, resourceVerified, workLocation) <> (UserRow.tupled, UserRow.unapply)
 
   }
 
@@ -36,7 +38,7 @@ trait Tables {
                                 startMonth: Int,
                                 startYear: Int,
                                 reason: String,
-                                durationHours: String
+                                durationDays: Int
                               )
 
   class UnavailabilityTable(_tableTag: Tag) extends Table[UnavailabilityRow](_tableTag, "unavailabilities") {
@@ -46,10 +48,10 @@ trait Tables {
     val startMonth: Rep[Int] = column[Int]("start_month")
     val startYear: Rep[Int] = column[Int]("start_year")
     val reason: Rep[String] = column[String]("reason")
-    val durationHours: Rep[String] = column[String]("duration_hours")
+    val durationDays: Rep[Int] = column[Int]("duration_days")
 
     def * =
-      (userId, startDate, startMonth, startYear, reason, durationHours) <> (UnavailabilityRow.tupled, UnavailabilityRow.unapply)
+      (userId, startDate, startMonth, startYear, reason, durationDays) <> (UnavailabilityRow.tupled, UnavailabilityRow.unapply)
   }
 
   lazy val UnavailabilityTable = new TableQuery(tag => new UnavailabilityTable(tag))

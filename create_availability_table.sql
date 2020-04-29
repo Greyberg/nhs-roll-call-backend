@@ -4,5 +4,5 @@ CREATE TABLE unavailabilities (
 	start_month INT NOT NULL,
 	start_year INT NOT NULL,
 	reason VARCHAR(20) NOT NULL,
-	duration_hours VARCHAR(10) NOT NULL
+	duration_days VARCHAR(10) NOT NULL
 );
